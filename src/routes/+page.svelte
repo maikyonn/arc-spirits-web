@@ -91,6 +91,30 @@
 		name="description"
 		content="Learn to play Arc Spirits, a simultaneous map-driven tableau-builder game"
 	/>
+
+	<!-- Open Graph / Discord Embed -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://arc-spirits-web.vercel.app/" />
+	<meta property="og:title" content="Arc Spirits - New Player Intro" />
+	<meta
+		property="og:description"
+		content="A simultaneous, map-driven tableau-builder where you program destinations, resolve fights, and grow your spirit engine. Play on Tabletop Simulator!"
+	/>
+	<meta property="og:image" content="https://arc-spirits-web.vercel.app/embed-image.png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Arc Spirits - New Player Intro" />
+	<meta
+		name="twitter:description"
+		content="A simultaneous, map-driven tableau-builder where you program destinations, resolve fights, and grow your spirit engine."
+	/>
+	<meta name="twitter:image" content="https://arc-spirits-web.vercel.app/embed-image.png" />
+
+	<!-- Theme Color (shows as accent on Discord) -->
+	<meta name="theme-color" content="#c4a060" />
 </svelte:head>
 
 <div class="app-container">
