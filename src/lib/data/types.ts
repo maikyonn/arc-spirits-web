@@ -1,4 +1,4 @@
-// Arc Spirits TTS Export Data Types
+// Arc Spirits TTS Export Data Types (aligned to the backend export schema)
 
 export interface Edition {
 	name: string;
@@ -9,22 +9,22 @@ export interface Edition {
 export interface Origin {
 	id: string;
 	name: string;
-	icon_url?: string;
-	color?: string;
-	description?: string;
-}
-
-export interface Class {
-	id: string;
-	name: string;
-	icon_url?: string;
-	description?: string;
-	breakpoints?: ClassBreakpoint[];
+	icon_url: string | null;
+	color: string | null;
+	description: string | null;
 }
 
 export interface ClassBreakpoint {
 	threshold: number;
 	effect: string;
+}
+
+export interface Class {
+	id: string;
+	name: string;
+	icon_url: string | null;
+	description: string | null;
+	breakpoints: ClassBreakpoint[] | null;
 }
 
 export interface HexSpirit {
@@ -40,114 +40,186 @@ export interface HexSpirit {
 	total_copies: number;
 }
 
+export interface RecipeEntry {
+	rune_id: string;
+	quantity: number;
+}
+
 export interface Artifact {
 	id: string;
 	name: string;
-	description?: string;
-	cost?: number;
-	effect?: string;
-	image_url?: string;
+	recipe_box: RecipeEntry[];
+	guardian_id: string | null;
+	image_path: string | null;
+	tag_ids: string[];
+	tag_names: (string | null)[];
+}
+
+export interface RewardIcon {
+	id: string;
+	name: string;
+	image_url: string | null;
+}
+
+export type MonsterCardType = 'monster' | 'event';
+
+export interface MonsterRewardRow {
+	type:
+		| 'all_in_combat'
+		| 'all_in_combat_pick_one'
+		| 'all_losers'
+		| 'all_winners'
+		| 'one_winner'
+		| 'tournament';
+	label: string | null;
+	icons: RewardIcon[];
 }
 
 export interface Monster {
 	id: string;
 	name: string;
-	type: 'monster' | 'event';
-	barrier?: number;
-	attack?: number;
-	rewards?: MonsterReward[];
-	image_url?: string;
+	type: MonsterCardType;
+	state: 'tainted' | 'corrupt' | 'fallen' | 'arcane' | 'inactive' | 'event' | string;
+	barrier: number | null;
+	damage: number | null;
+	order_num: number;
+	image_url: string | null;
+	effect_ids: string[];
+	reward_rows: MonsterRewardRow[];
+	copy_index: number;
+	total_copies: number;
+	// Event-only fields (present when type="event")
+	event_name?: string;
+	description?: string;
 }
 
-export interface MonsterReward {
-	type: string;
-	amount: number;
-}
+export type LocationRewardRow =
+	| { type: 'gain'; icons: RewardIcon[] }
+	| { type: 'trade'; cost_icons: RewardIcon[]; gain_icons: RewardIcon[] }
+	| { type: 'text'; text: string };
 
 export interface GameLocation {
 	id: string;
 	name: string;
-	gains?: LocationGain[];
-	trades?: LocationTrade[];
-}
-
-export interface LocationGain {
-	resource: string;
-	amount: number;
-}
-
-export interface LocationTrade {
-	give: { resource: string; amount: number };
-	receive: { resource: string; amount: number };
+	origin_id: string | null;
+	origin_name: string | null;
+	image_url: string | null;
+	background_image_url: string | null;
+	reward_rows: LocationRewardRow[];
 }
 
 export interface Traveler {
 	id: string;
 	name: string;
-	image_url?: string;
+	image_url: string | null;
 }
 
 export interface TravelerQuest {
 	id: string;
 	traveler_id: string;
 	name: string;
-	description?: string;
-	reward?: string;
+	description: string | null;
+	reward: string | null;
 }
 
 export interface Guardian {
 	id: string;
 	name: string;
-	ability?: string;
-	image_url?: string;
-	mat_image_url?: string;
-	origin_id?: string;
-	origin_name?: string;
+	ability: string | null;
+	image_url: string | null;
+	chibi_image_url?: string | null;
+	mat_image_url: string | null;
+	origin_id: string | null;
+	origin_name: string | null;
 }
 
 export interface Rune {
 	id: string;
 	name: string;
-	icon_url?: string;
-	color?: string;
+	icon_url: string | null;
+	color: string | null;
+	type?: 'origin' | 'class' | string;
+	origin_id?: string | null;
+	origin_name?: string | null;
+	class_id?: string | null;
+	class_name?: string | null;
 }
 
 export interface Token {
 	id: string;
 	name: string;
-	icon_url?: string;
+	source_type?: string;
+	image_url: string | null;
 }
 
 export interface IconPoolItem {
 	id: string;
 	name: string;
-	icon_url: string;
-	category?: string;
+	image_url?: string | null;
+	icon_url?: string | null;
+	category?: string | null;
+	source_type?: string;
+	tags?: string[];
+	export_as_token?: boolean;
+}
+
+export interface DiceFace {
+	side_number: number;
+	reward_type: string;
+	reward_value: string;
+	reward_description: string;
+	icon_url?: string | null;
 }
 
 export interface CustomDice {
 	id: string;
 	name: string;
+	description: string;
+	icon: string | null;
+	color: string | null;
+	dice_type: string;
+	prefab_image_url: string | null;
 	faces: DiceFace[];
 }
 
-export interface DiceFace {
-	value: number | string;
-	icon_url?: string;
+export interface Board {
+	name: string;
+	image_url: string | null;
 }
 
-export interface Board {
-	id: string;
+export interface ScreenshotAsset {
 	name: string;
-	image_url?: string;
+	path: string;
+	file_type: string;
+	file_size: string;
+	image_url: string;
+	file_url: string;
 }
 
 export interface TTSMenu {
 	background_url: string;
 }
 
+export interface IconGuideIcon {
+	id: string;
+	position: number;
+	group?: string | null;
+	name: string;
+	description: string | null;
+	image_url: string | null;
+}
+
+export interface SpecialEffect {
+	id: string;
+	name: string;
+	description: string | null;
+	icon: string | null;
+	color: string | null;
+}
+
 export interface TTSExportData {
 	exported_at: string;
+	export_language?: string;
 	edition: Edition;
 	schema_docs: string;
 	origins: Origin[];
@@ -162,9 +234,13 @@ export interface TTSExportData {
 	runes: Rune[];
 	tokens: Token[];
 	icon_pool: IconPoolItem[];
+	icon_guide_png_url: string | null;
+	icon_guide_icons: IconGuideIcon[];
+	special_effects: SpecialEffect[];
 	custom_dice: CustomDice[];
 	tts_menu: TTSMenu;
 	boards: Board[];
+	screenshots?: ScreenshotAsset[];
 }
 
 // Derived/computed types for UI

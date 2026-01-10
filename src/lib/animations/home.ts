@@ -44,13 +44,10 @@ export function setupHomeGsapAnimations() {
 			delay: 1
 		});
 
-		gsap.from('.cta-button', {
-			opacity: 0,
-			y: 30,
-			stagger: 0.15,
-			duration: 0.6,
-			delay: 1.2
-		});
+		gsap.fromTo('.cta-button',
+			{ opacity: 0, y: 30 },
+			{ opacity: 1, y: 0, stagger: 0.15, duration: 0.6, delay: 1.2, ease: 'power3.out' }
+		);
 
 		// Floating hex animation
 		gsap.to('.hex-item', {
@@ -287,6 +284,12 @@ export function startFloatingSpirits() {
 		if (activeSpirits.has(el)) return;
 		activeSpirits.add(el);
 
+		const container = (el.offsetParent as HTMLElement | null) ?? document.documentElement;
+		const containerWidth = container.clientWidth || window.innerWidth;
+		const containerHeight = container.clientHeight || window.innerHeight;
+		const baseLeft = el.offsetLeft;
+		const baseTop = el.offsetTop;
+
 		const randomScale = 0.3 + Math.random() * 1.7;
 		const displayDuration = 5 + Math.random() * 4;
 
@@ -297,20 +300,20 @@ export function startFloatingSpirits() {
 			startY = 0;
 		switch (entryEdge) {
 			case 0:
-				startX = -200;
-				startY = Math.random() * 400 - 100;
+				startX = -200 - baseLeft;
+				startY = Math.random() * containerHeight - baseTop;
 				break;
 			case 1:
-				startX = window.innerWidth + 100;
-				startY = Math.random() * 400 - 100;
+				startX = containerWidth + 100 - baseLeft;
+				startY = Math.random() * containerHeight - baseTop;
 				break;
 			case 2:
-				startX = Math.random() * window.innerWidth - 200;
-				startY = -200;
+				startX = Math.random() * containerWidth - baseLeft;
+				startY = -200 - baseTop;
 				break;
 			case 3:
-				startX = Math.random() * window.innerWidth - 200;
-				startY = 500;
+				startX = Math.random() * containerWidth - baseLeft;
+				startY = containerHeight + 200 - baseTop;
 				break;
 		}
 
@@ -318,20 +321,20 @@ export function startFloatingSpirits() {
 			endY = 0;
 		switch (exitEdge) {
 			case 0:
-				endX = -200;
-				endY = Math.random() * 400 - 100;
+				endX = -200 - baseLeft;
+				endY = Math.random() * containerHeight - baseTop;
 				break;
 			case 1:
-				endX = window.innerWidth + 100;
-				endY = Math.random() * 400 - 100;
+				endX = containerWidth + 100 - baseLeft;
+				endY = Math.random() * containerHeight - baseTop;
 				break;
 			case 2:
-				endX = Math.random() * window.innerWidth - 200;
-				endY = -200;
+				endX = Math.random() * containerWidth - baseLeft;
+				endY = -200 - baseTop;
 				break;
 			case 3:
-				endX = Math.random() * window.innerWidth - 200;
-				endY = 500;
+				endX = Math.random() * containerWidth - baseLeft;
+				endY = containerHeight + 200 - baseTop;
 				break;
 		}
 

@@ -91,6 +91,7 @@
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
+	text-decoration: none;
 }
 
 .brand-slash {
@@ -110,8 +111,19 @@
 
 .nav-links {
 	display: flex;
-	gap: 0.15rem;
+	gap: 0.75rem;
 	flex-wrap: wrap;
+	align-items: center;
+}
+
+.nav-links .cta-button {
+	padding: 0.55rem 1.15rem;
+	font-size: 0.85rem;
+	letter-spacing: 0.08em;
+}
+
+.nav-links .cta-button.secondary {
+	border-width: 2px;
 }
 
 .nav-link {
@@ -179,6 +191,23 @@
 	position: absolute;
 	inset: 0;
 	overflow: hidden;
+}
+
+.hero-lottie {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	pointer-events: none;
+	z-index: 2;
+	opacity: 0.18;
+	filter: drop-shadow(0 0 24px rgba(196, 160, 96, 0.25));
+}
+
+.hero-lottie svg,
+.hero-lottie canvas {
+	width: min(520px, 78vw);
+	height: auto;
 }
 
 .bg-slash {
@@ -530,9 +559,21 @@
 .main-content {
 	position: relative;
 	z-index: 1;
-	max-width: 1300px;
+	max-width: 1200px;
 	margin: 0 auto;
-	padding: 4rem 1.5rem;
+	padding: 4rem 2.25rem;
+}
+
+@media (min-width: 1200px) {
+	.main-content {
+		padding: 4rem 3.5rem;
+	}
+}
+
+@media (min-width: 1600px) {
+	.main-content {
+		padding: 4rem 5rem;
+	}
 }
 
 /* ============================================
@@ -587,6 +628,16 @@
 	color: var(--color-muted-lavender);
 	line-height: 1.7;
 	max-width: 380px;
+}
+
+.mat-text-content .mat-wip-note {
+	margin-top: 1rem;
+	color: var(--color-arcane-gold);
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	font-size: 0.95rem;
+	opacity: 0.9;
 }
 
 .mat-container {

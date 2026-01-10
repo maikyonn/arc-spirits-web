@@ -69,6 +69,7 @@
 					Mix and match Spirits to discover powerful synergies and unique strategies. Every game
 					offers new combinations to explore and master.
 				</p>
+				<p class="mat-wip-note">Still in development.</p>
 			</div>
 			<div class="mat-container">
 				<img
