@@ -1034,6 +1034,63 @@ body {
 	}
 
 	/* Hex spirit table */
+	.hex-spirit-header-row {
+		@apply flex flex-wrap items-end justify-between gap-3;
+	}
+
+	.hex-spirit-view-toggle {
+		@apply flex flex-wrap gap-2;
+	}
+
+	.hex-spirit-view-toggle button {
+		@apply rounded border px-3 py-2 text-xs uppercase tracking-widest;
+		border-color: rgba(196, 160, 96, 0.18);
+		color: rgba(240, 237, 230, 0.78);
+		font-family: 'Opsilon', sans-serif;
+		background: rgba(0, 0, 0, 0.15);
+	}
+
+	.hex-spirit-view-toggle button.active {
+		border-color: rgba(196, 160, 96, 0.42);
+		color: rgba(240, 237, 230, 0.95);
+		background: rgba(196, 160, 96, 0.12);
+	}
+
+	.hex-spirit-origin-list {
+		@apply mt-6 grid gap-4;
+	}
+
+	.hex-spirit-origin-card {
+		@apply rounded border p-4;
+		border-color: rgba(196, 160, 96, 0.15);
+		background: rgba(0, 0, 0, 0.15);
+	}
+
+	.hex-spirit-origin-header {
+		@apply mb-3 flex items-center justify-between gap-3;
+	}
+
+	.hex-spirit-origin-title {
+		@apply flex items-center gap-2;
+	}
+
+	.hex-spirit-origin-name {
+		@apply m-0 text-sm uppercase tracking-widest;
+		color: rgba(240, 237, 230, 0.92);
+		font-family: 'Opsilon', sans-serif;
+	}
+
+	.hex-spirit-origin-count {
+		@apply rounded border px-2 py-0.5 text-xs;
+		border-color: rgba(196, 160, 96, 0.18);
+		color: rgba(240, 237, 230, 0.7);
+		background: rgba(0, 0, 0, 0.25);
+	}
+
+	.hex-spirit-origin-grid {
+		@apply flex flex-wrap gap-1;
+	}
+
 	.hex-spirit-table-wrapper {
 		@apply mt-6 overflow-x-auto rounded border;
 		border-color: rgba(196, 160, 96, 0.15);
@@ -1090,7 +1147,7 @@ body {
 	}
 
 	.hex-spirit-cell {
-		min-width: 160px;
+		min-width: 420px;
 	}
 
 	.hex-spirit-cell-grid {
@@ -1099,8 +1156,8 @@ body {
 
 	.hex-spirit-thumb {
 		@apply block rounded-sm;
-		width: 52px;
-		height: 52px;
+		width: 208px;
+		height: 208px;
 		object-fit: contain;
 	}
 
