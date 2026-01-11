@@ -32,8 +32,8 @@ export interface HexSpirit {
 	name: string;
 	cost: number;
 	traits: {
-		origins: string[];
-		classes: string[];
+		origins: { id: string; name: string }[];
+		classes: { id: string; name: string }[];
 	};
 	image_url: string;
 	copy_index: number;

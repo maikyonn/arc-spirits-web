@@ -1032,4 +1032,81 @@ body {
 		border-color: rgba(232, 200, 116, 0.25);
 		color: rgba(232, 200, 116, 0.95);
 	}
+
+	/* Hex spirit table */
+	.hex-spirit-table-wrapper {
+		@apply mt-6 overflow-x-auto rounded border;
+		border-color: rgba(196, 160, 96, 0.15);
+		background: rgba(0, 0, 0, 0.15);
+	}
+
+	.hex-spirit-table {
+		@apply w-full border-separate border-spacing-0 text-sm;
+	}
+
+	.hex-spirit-table th,
+	.hex-spirit-table td {
+		@apply border p-2 align-top;
+		border-color: rgba(196, 160, 96, 0.12);
+	}
+
+	.hex-spirit-col-header {
+		@apply text-center;
+		min-width: 160px;
+	}
+
+	.hex-spirit-row-header {
+		@apply text-center;
+		width: 56px;
+	}
+
+	.hex-spirit-corner {
+		width: 56px;
+	}
+
+	.hex-spirit-table thead th {
+		position: sticky;
+		top: 0;
+		z-index: 20;
+		background: rgba(10, 10, 15, 0.92);
+		backdrop-filter: blur(10px);
+	}
+
+	.hex-spirit-row-header {
+		position: sticky;
+		left: 0;
+		z-index: 15;
+		background: rgba(10, 10, 15, 0.92);
+		backdrop-filter: blur(10px);
+	}
+
+	.hex-spirit-corner {
+		position: sticky;
+		top: 0;
+		left: 0;
+		z-index: 25;
+		background: rgba(10, 10, 15, 0.96);
+		backdrop-filter: blur(10px);
+	}
+
+	.hex-spirit-cell {
+		min-width: 160px;
+	}
+
+	.hex-spirit-cell-grid {
+		@apply flex flex-wrap gap-1;
+	}
+
+	.hex-spirit-thumb {
+		@apply block rounded-sm;
+		width: 52px;
+		height: 52px;
+		object-fit: contain;
+	}
+
+	.hex-spirit-header-fallback {
+		@apply block text-[10px] uppercase tracking-widest;
+		color: rgba(240, 237, 230, 0.72);
+		font-family: 'Opsilon', sans-serif;
+	}
 }

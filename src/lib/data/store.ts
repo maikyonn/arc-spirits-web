@@ -12,6 +12,10 @@ import type {
 const TTS_EXPORT_ENDPOINT =
 	'https://gvxfokbptelmvvlxbigh.supabase.co/functions/v1/export-all-tts-json';
 
+function normalizeSpiritName(name: string): string {
+	return name.trim().replaceAll(/\s+/g, ' ').toLowerCase();
+}
+
 // Cache for the fetched data
 let cachedData: TTSExportData | null = null;
 let fetchPromise: Promise<TTSExportData> | null = null;
@@ -64,10 +68,12 @@ export function clearCache(): void {
 export function getUniqueSpirits(data: TTSExportData): HexSpirit[] {
 	const seen = new Set<string>();
 	return data.hex_spirits.filter((spirit) => {
-		if (seen.has(spirit.name)) {
+		const key = normalizeSpiritName(spirit.name);
+		if (!key) return false;
+		if (seen.has(key)) {
 			return false;
 		}
-		seen.add(spirit.name);
+		seen.add(key);
 		return true;
 	});
 }
@@ -82,10 +88,10 @@ export function getSpiritsWithDetails(data: TTSExportData): SpiritWithDetails[] 
 	return getUniqueSpirits(data).map((spirit) => ({
 		...spirit,
 		originDetails: spirit.traits.origins
-			.map((id) => originMap.get(id))
+			.map((o) => originMap.get(o.id))
 			.filter((o): o is Origin => o !== undefined),
 		classDetails: spirit.traits.classes
-			.map((id) => classMap.get(id))
+			.map((c) => classMap.get(c.id))
 			.filter((c): c is Class => c !== undefined)
 	}));
 }
@@ -97,7 +103,9 @@ export function getOriginsWithSpirits(data: TTSExportData): OriginWithSpirits[] 
 	const uniqueSpirits = getUniqueSpirits(data);
 
 	return data.origins.map((origin) => {
-		const spirits = uniqueSpirits.filter((spirit) => spirit.traits.origins.includes(origin.id));
+		const spirits = uniqueSpirits.filter((spirit) =>
+			spirit.traits.origins.some((o) => o.id === origin.id)
+		);
 		return {
 			...origin,
 			spirits,
@@ -113,7 +121,9 @@ export function getClassesWithSpirits(data: TTSExportData): ClassWithSpirits[] {
 	const uniqueSpirits = getUniqueSpirits(data);
 
 	return data.classes.map((cls) => {
-		const spirits = uniqueSpirits.filter((spirit) => spirit.traits.classes.includes(cls.id));
+		const spirits = uniqueSpirits.filter((spirit) =>
+			spirit.traits.classes.some((c) => c.id === cls.id)
+		);
 		return {
 			...cls,
 			spirits,
@@ -139,7 +149,7 @@ export function getSpiritsByOrigin(data: TTSExportData): Map<string, HexSpirit[]
 	const uniqueSpirits = getUniqueSpirits(data);
 
 	for (const origin of data.origins) {
-		const spirits = uniqueSpirits.filter((s) => s.traits.origins.includes(origin.id));
+		const spirits = uniqueSpirits.filter((s) => s.traits.origins.some((o) => o.id === origin.id));
 		result.set(origin.id, spirits);
 	}
 
@@ -154,7 +164,7 @@ export function getSpiritsByClass(data: TTSExportData): Map<string, HexSpirit[]>
 	const uniqueSpirits = getUniqueSpirits(data);
 
 	for (const cls of data.classes) {
-		const spirits = uniqueSpirits.filter((s) => s.traits.classes.includes(cls.id));
+		const spirits = uniqueSpirits.filter((s) => s.traits.classes.some((c) => c.id === cls.id));
 		result.set(cls.id, spirits);
 	}
 

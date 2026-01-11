@@ -168,7 +168,14 @@
 		{ id: 'spirit-world', label: 'Spirit World' },
 		{ id: 'game-flow', label: 'Game Flow' },
 		{ id: 'combat', label: 'Combat Interaction' },
-		{ id: 'location-benefits', label: 'Location Benefits' },
+		{
+			id: 'location-benefits',
+			label: 'Location Benefits',
+			children: [
+				{ id: 'summoning', label: 'Summoning Spirits' },
+				{ id: 'cultivation', label: 'Cultivate Spirits' }
+			]
+		},
 		{
 			id: 'player-mat-overview',
 			label: 'Player Mat Overview',
@@ -176,11 +183,12 @@
 				{ id: 'artifacts', label: 'Artifacts' },
 				{ id: 'spirit-status', label: 'Spirit Status' }
 			]
-		},
-		{ id: 'icon-reference', label: 'Icon Reference' },
-		{ label: 'Examples', href: '/rules/examples' },
-		{ label: 'TTS Guide', href: '/rules/tts-guide' }
-	];
+			},
+			{ id: 'icon-reference', label: 'Icon Reference' },
+			{ label: 'Hex Spirit Table', href: '/rules/hex-spirit-table' },
+			{ label: 'Examples', href: '/rules/examples' },
+			{ label: 'TTS Guide', href: '/rules/tts-guide' }
+		];
 
 	function flattenTocIds(items: TocItem[]): string[] {
 		const result: string[] = [];
@@ -341,6 +349,11 @@
 				</div>
 			</div>
 
+			<div class="note-box">
+				<strong>Simultaneous play:</strong> there is no turn order. Players resolve phases in parallel; if multiple
+				players share a location, resolve the shared combat together.
+			</div>
+
 				<div class="content-block">
 					<h3>Core Pieces</h3>
 					<div class="pieces-grid core-pieces-grid">
@@ -408,6 +421,14 @@
 							<p>
 								Hex tiles you summon onto available hex spaces on your Spirit Tableau. Their "stats" are
 								just icons representing Origins and Classes.
+							</p>
+						</div>
+						<div class="piece-card">
+							<div class="piece-icon">⬢</div>
+							<h4>Spirit Bags</h4>
+							<p>
+								Spirits come from either the <strong>Spirit World Bag</strong> or <strong>Arcane Abyss Bag</strong>.
+								Any spirits you look at but don't choose to summon return to the <strong>same bag</strong>.
 							</p>
 						</div>
 						<div class="piece-card">
@@ -499,15 +520,18 @@
 								</div>
 							{:else}
 								<div class="piece-icon">☠</div>
-							{/if}
-							<h4>Status Tiles</h4>
-							<p>
-								Tiles that represent your Corruption Status (Pure → Tainted → Corrupt → Fallen).
-							</p>
-						</div>
-						<div class="piece-card">
-							{#if tts}
-								<div class="piece-icon piece-icon-examples">
+								{/if}
+								<h4>Spirit Status (Status Tiles)</h4>
+								<p>
+									Your Corruption track: <strong>Pure → Tainted → Corrupt → Fallen</strong>.
+								</p>
+								<ul class="rule-list">
+									<li>Some statuses (like <strong>Corrupt</strong> and <span class="status-badge fallen">Fallen</span>) grant <strong>Arcane Attack Dice</strong> in <strong>every combat</strong>.</li>
+								</ul>
+							</div>
+							<div class="piece-card">
+								{#if tts}
+									<div class="piece-icon piece-icon-examples">
 									{#each coreResourceExamples as icon (icon.id)}
 										{#if icon.image_url}
 											<img
@@ -522,20 +546,28 @@
 										{/if}
 									{/each}
 								</div>
-							{:else}
-								<div class="piece-icon">📊</div>
-							{/if}
-							<h4>Resources</h4>
-							<p>Track Victory Points, Barriers (HP), and Arcane Blood.</p>
+								{:else}
+									<div class="piece-icon">📊</div>
+								{/if}
+								<h4>Resources</h4>
+								<p>Track Victory Points, Barriers (HP), Arcane Blood, and Arcane Barriers.</p>
+								<ul class="rule-list">
+									<li><strong>Barrier:</strong> your HP. If you have <strong>0 Barriers</strong>, you cannot be a combatant.</li>
+									<li>
+										<strong>Arcane Blood:</strong> spend to drop <strong>Spirit Status</strong> by 1 and gain the <strong>one-time</strong> arrow reward
+										(cost depends on your current Status).
+									</li>
+									<li><strong>Arcane Barrier:</strong> a <strong>one-time Barrier</strong> you can gain from Status drop rewards and some Spirit World reward rows.</li>
+								</ul>
+							</div>
 						</div>
 					</div>
-				</div>
 
-		</section>
+			</section>
 
-		<!-- Spirit World -->
-		<section id="spirit-world" class="rule-section">
-			<div class="section-header">
+			<!-- Spirit World -->
+			<section id="spirit-world" class="rule-section">
+				<div class="section-header">
 				<span class="section-icon">✦</span>
 				<h2>Spirit World</h2>
 				<div class="section-line"></div>
@@ -554,16 +586,17 @@
 								is the primary decisionmaking in this game.
 							</p>
 							<p>
-								Monster cards may also be placed on Spirit World locations, which will block you from activating
-								the Reward Rows on that location.
+								Monsters are placed on Spirit World locations (as indicated on the monster card). While a monster
+								occupies a location, it blocks you from resolving that location's Reward Rows.
 							</p>
 							<p>
-								In general for all locations (except the Arcane Abyss), locations will have two types of
-								reward rows: <strong>Gain</strong> rows and <strong>Trade</strong> rows.
+								In general for all locations (except the Arcane Abyss), locations have Reward Rows. Each row is
+								either a <strong>Gain</strong> row (no arrow) or a <strong>Trade</strong> row (arrow).
 							</p>
 							<ul class="rule-list">
 								<li><strong>Gain</strong> rows mean you gain the benefit once.</li>
-								<li><strong>Trade</strong> rows mean you can spend resources to gain something else once.</li>
+								<li><strong>Trade</strong> rows mean you can spend resources once to gain something else.</li>
+								<li>Each row can be resolved <strong>once per player per round</strong>.</li>
 							</ul>
 						</div>
 						<img
@@ -583,22 +616,26 @@
 		</section>
 
 		<!-- Game Flow Section -->
-		<section id="game-flow" class="rule-section">
-			<div class="section-header">
-				<span class="section-icon">↻</span>
-				<h2>Game Flow</h2>
-				<div class="section-line"></div>
-			</div>
+			<section id="game-flow" class="rule-section">
+				<div class="section-header">
+					<span class="section-icon">↻</span>
+					<h2>Game Flow</h2>
+					<div class="section-line"></div>
+				</div>
 
-			<div class="content-block">
-				<p class="lead-text">
-					Click on each section of the diagram below for detailed information about setup, stages, rounds, and game end.
-				</p>
-			</div>
+				<div class="content-block">
+					<p class="lead-text">
+						Click on each section of the diagram below for detailed information about setup, stages, rounds, and game end.
+					</p>
+					<div class="note-box">
+						<strong>Stage start:</strong> remove any monsters from the previous stage, then reveal the new stage's monsters and place each
+						monster at the location printed on its card (bosses go to the <strong>Arcane Abyss</strong>).
+					</div>
+				</div>
 
-			<div class="diagram-container full-width">
-				<GameFlowDiagram />
-			</div>
+				<div class="diagram-container full-width">
+					<GameFlowDiagram />
+				</div>
 		</section>
 
 		<!-- Combat Interaction Section -->
@@ -650,21 +687,25 @@
 								<span class="optional-tag">Optional</span>
 							</div>
 							<div class="card-body">
-								<ul>
-									<li>
-										If you want to, you can Spend/Consume (the necessary amount indicated on your current
-										Status) <strong>Arcane Blood</strong> to corrupt yourself, gaining the rewards
-										indicated by the arrow, and permanently lowering your Status.
-									</li>
-									<li>If your new Status reduces your Spirit limit, <strong>discard spirits</strong> immediately to the new limit</li>
-									<li>You can lower your Status multiple times before one combat</li>
-								</ul>
-								<div class="inline-example">
-									<span class="status-badge pure">Pure</span> → consumes blood → gains <strong>2 Arcane Attack Dice</strong> for this combat only
+									<ul>
+										<li>
+											If you want to, you can Spend/Consume (the necessary amount indicated on your current
+											Status) <strong>Arcane Blood</strong> to corrupt yourself, gaining the rewards
+											indicated by the arrow, and permanently lowering your Status.
+										</li>
+										<li>
+											Arrow rewards are <strong>one-time</strong> (for example: Arcane Attack Dice for this combat,
+											Arcane Barriers, etc.).
+										</li>
+										<li>If your new Status reduces your Spirit limit, <strong>discard spirits</strong> immediately to the new limit</li>
+										<li>You can lower your Status multiple times before one combat</li>
+									</ul>
+									<div class="inline-example">
+										<span class="status-badge pure">Pure</span> → consumes blood → gains <strong>2 Arcane Attack Dice</strong> for this combat
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
 					<!-- Step 3 -->
 					<div class="combat-phase" data-step="3">
@@ -678,14 +719,19 @@
 								<h5>Gather Attack Dice</h5>
 							</div>
 							<div class="card-body">
-								<ul>
-									<li>Use the Class reference sheet to see what combat dice are given to you in combat</li>
-									<li>The primary way of getting combat dice is through the <strong>Fighter</strong> class</li>
-									<li>See Traits: Classes & Origins chapter (will write later)</li>
-								</ul>
-								<div class="inline-tip">
-									Keep dice near your area — adjust between combats instead of re-gathering
-								</div>
+									<ul>
+										<li>Use the Class reference sheet to see what combat dice are given to you in combat</li>
+										<li>The primary way of getting combat dice is through the <strong>Fighter</strong> class</li>
+										<li>
+											Some dice also come from <strong>Spirit Status</strong> (for example,
+											<strong>Corrupt</strong> and <span class="status-badge fallen">Fallen</span> grant
+											<strong>Arcane Attack Dice</strong> in <strong>every combat</strong>)
+										</li>
+										<li>See Traits: Classes & Origins chapter (will write later)</li>
+									</ul>
+									<div class="inline-tip">
+										Keep dice near your area — adjust between combats instead of re-gathering
+									</div>
 							</div>
 						</div>
 					</div>
@@ -701,13 +747,16 @@
 								<span class="phase-icon">⚔</span>
 								<h5>Resolve the Fight</h5>
 								<span class="coop-tag">Cooperative</span>
-							</div>
-							<div class="card-body">
-								<p class="combat-substep-intro">All combatants fighting the monster roll their dice and pool their damage:</p>
-								<ul>
-									<li><strong>Deal damage:</strong> Move the Monster Damage Taken marker 1 slot to the right per damage dealt</li>
-									<li><strong>Defend against counterattack:</strong> Each combatant checks if they defended the monster's attack</li>
-								</ul>
+								</div>
+								<div class="card-body">
+									<p class="combat-substep-intro">
+										All combatants fighting the monster roll their dice and pool their damage. Even if the monster is defeated, combatants still resolve
+										the monster's counterattack:
+									</p>
+									<ul>
+										<li><strong>Deal damage:</strong> Move the Monster Damage Taken marker 1 slot to the right per damage dealt</li>
+										<li><strong>Defend against counterattack:</strong> Each combatant checks if they defended the monster's attack</li>
+									</ul>
 								<ol class="defense-steps">
 									<li>Each combatant checks whether they defended the monster's attack</li>
 									<li>Combatants with <strong>no defenders</strong> take all incoming damage</li>
@@ -734,16 +783,16 @@
 								<span class="phase-icon">✦</span>
 								<h5>Claim Rewards</h5>
 							</div>
-							<div class="card-body">
-								<ul>
-									<li>
-										All combatants receive rewards based on how the Monster Damage marker moved. All combatants get
-										the same rewards, and there may be an additional participation reward as well.
-									</li>
-								</ul>
+								<div class="card-body">
+									<ul>
+										<li>
+											When the monster is defeated, <strong>all combatants</strong> gain <strong>all</strong> rewards shown on the monster's
+											<strong>Damage Rewards</strong> track.
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
-					</div>
 				</div>
 
 					<div class="combat-footer">
@@ -767,10 +816,10 @@
 				<div class="content-block">
 					<p class="lead-text">After the monster has been defeated (or immediately if no monster is present), resolve location rewards:</p>
 
-				<div class="reward-types">
-					<div class="reward-type gain">
-						<div class="reward-label">GAIN</div>
-						<p>Take the listed resources <strong>for free</strong>.</p>
+					<div class="reward-types">
+						<div class="reward-type gain">
+							<div class="reward-label">GAIN</div>
+							<p>Take the listed resources <strong>for free</strong>.</p>
 						<p class="reward-indicator">Indicated by rows <strong>without</strong> an arrow</p>
 					</div>
 					<div class="reward-type trade">
@@ -778,15 +827,55 @@
 						<p>Pay the listed cost to gain what's pictured.</p>
 						<p class="reward-indicator">Indicated by rows <strong>with</strong> an arrow</p>
 					</div>
-				</div>
+					</div>
 
-					<ul class="rule-list">
-						<li>Each player resolves rewards <strong>independently</strong> (no competition/blocking).</li>
-						<li>Players may choose to do <strong>one, all, or none</strong> of the reward rows at that location.</li>
-					</ul>
-				</div>
+						<ul class="rule-list">
+							<li>Locations may have a mix of <strong>Gain</strong> and <strong>Trade</strong> rows.</li>
+							<li>Each player resolves reward rows <strong>independently</strong> (no competition/blocking).</li>
+							<li>Each reward row can be resolved <strong>once per player per round</strong>.</li>
+						</ul>
+					</div>
 
-			</section>
+					<article id="summoning" class="subsection">
+						<div class="subsection-header">
+							<span class="subsection-icon">⬢</span>
+							<h4>Summoning Spirits</h4>
+						</div>
+
+						<div class="subsection-content">
+							<p>
+								Some location reward rows let you summon spirits from a bag (the <strong>Spirit World Bag</strong> or the
+								<strong>Arcane Abyss Bag</strong>).
+							</p>
+							<ul class="rule-list">
+								<li>Look at the spirits indicated by the row (from the specified bag).</li>
+								<li>Choose the spirits you are allowed to summon and place them onto your mat.</li>
+								<li>Return all unchosen spirits to the <strong>same bag</strong> they came from.</li>
+							</ul>
+							<div class="note-box">
+								If a monster is on your location, you must defeat it before you can resolve Summoning rows.
+							</div>
+						</div>
+					</article>
+
+					<article id="cultivation" class="subsection">
+						<div class="subsection-header">
+							<span class="subsection-icon">◆</span>
+							<h4>Cultivate Spirits</h4>
+						</div>
+
+						<div class="subsection-content">
+							<p>
+								<strong>Cultivate Spirits</strong> is an action that appears as a reward row on certain Spirit World locations.
+							</p>
+							<ul class="rule-list">
+								<li>You can only Cultivate Spirits at a location that has a Cultivate Spirits reward row.</li>
+								<li>Resolve the Cultivate Spirits row to gain the runes/resources it indicates.</li>
+							</ul>
+						</div>
+					</article>
+
+				</section>
 
 			<!-- Player Mat Overview Section -->
 			<section id="player-mat-overview" class="rule-section">
@@ -899,20 +988,21 @@
 									<div class="status-arrow">→</div>
 								{/if}
 							{/each}
-						</div>
-						<p>
-							<strong>When you spend Arcane Blood, you decrease your Spirit Status by 1 step.</strong>
-						</p>
-						<ul class="rule-list">
-							<li>If your new Status reduces your Spirit limit, immediately <strong>discard spirits</strong> until at your new limit.</li>
-							<li>
-								You gain the combat bonus associated with that Status drop for the
-								<strong>next combat only</strong>.
-							</li>
-							<li>
-								If you are already <span class="status-badge fallen">Fallen</span>, you cannot spend
-								Arcane Blood further.
-							</li>
+							</div>
+							<p>
+								<strong>When you spend Arcane Blood, you decrease your Spirit Status by 1 step and gain a one-time reward (indicated by the arrow).</strong>
+							</p>
+								<ul class="rule-list">
+									<li>The Arcane Blood cost to drop a Status depends on your <strong>current Status</strong> (shown on your mat).</li>
+									<li>If your new Status reduces your Spirit limit, immediately <strong>discard spirits</strong> until at your new limit.</li>
+									<li>
+										Some statuses (like <strong>Corrupt</strong> and <span class="status-badge fallen">Fallen</span>) grant
+										<strong>Arcane Attack Dice</strong> in <strong>every combat</strong>.
+									</li>
+									<li>
+									If you are already <span class="status-badge fallen">Fallen</span>, you cannot spend
+									Arcane Blood further.
+								</li>
 						</ul>
 
 						<div class="example-box">
