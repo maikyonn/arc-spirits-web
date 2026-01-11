@@ -100,8 +100,8 @@
 			{#if tts}
 				<div class="content-block">
 					<p class="lead-text">
-						Rows are <strong>Origins</strong>, columns are <strong>Classes</strong>. Each cell contains only the Hex
-						Spirit images that match that Origin + Class.
+						Rows are <strong>Classes</strong>, columns are <strong>Origins</strong>. Each cell contains only the Hex
+						Spirit images that match that Class + Origin.
 					</p>
 
 					<div class="hex-spirit-table-wrapper">
@@ -109,30 +109,8 @@
 							<thead>
 								<tr>
 									<th class="hex-spirit-corner" aria-hidden="true"></th>
-									{#each classesSorted as cls (cls.id)}
+									{#each originsSorted as origin (origin.id)}
 										<th class="hex-spirit-col-header">
-											{#if cls.icon_url}
-												<img
-													class="mini-icon"
-													src={cls.icon_url}
-													alt={cls.name}
-													title={cls.name}
-													width="22"
-													height="22"
-													loading="lazy"
-													decoding="async"
-												/>
-											{:else}
-												<span class="hex-spirit-header-fallback" title={cls.name}>{cls.name}</span>
-											{/if}
-										</th>
-									{/each}
-								</tr>
-							</thead>
-							<tbody>
-								{#each originsSorted as origin (origin.id)}
-									<tr>
-										<th class="hex-spirit-row-header">
 											{#if origin.icon_url}
 												<img
 													class="mini-icon"
@@ -148,8 +126,30 @@
 												<span class="hex-spirit-header-fallback" title={origin.name}>{origin.name}</span>
 											{/if}
 										</th>
+									{/each}
+								</tr>
+							</thead>
+							<tbody>
+								{#each classesSorted as cls (cls.id)}
+									<tr>
+										<th class="hex-spirit-row-header">
+											{#if cls.icon_url}
+												<img
+													class="mini-icon"
+													src={cls.icon_url}
+													alt={cls.name}
+													title={cls.name}
+													width="22"
+													height="22"
+													loading="lazy"
+													decoding="async"
+												/>
+											{:else}
+												<span class="hex-spirit-header-fallback" title={cls.name}>{cls.name}</span>
+											{/if}
+										</th>
 
-										{#each classesSorted as cls (cls.id)}
+										{#each originsSorted as origin (origin.id)}
 											{@const key = `${origin.id}:${cls.id}`}
 											{@const spirits = spiritsByOriginClass.get(key) ?? []}
 											<td class="hex-spirit-cell">
