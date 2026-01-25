@@ -115,6 +115,51 @@ body {
    RULES PAGES (TAILWIND @apply)
    ============================================ */
 @layer components {
+	/* ==========================================
+	   TYPOGRAPHY SCALE
+	   Standardized sizes for consistent hierarchy
+	   ========================================== */
+
+	/* Heading sizes (Opsilon font) */
+	/* H1 - Chapter titles */
+	/* H2 - Subchapter titles */
+	/* H3 - Sub-subchapter titles */
+	/* H4 - Card/section headers */
+	/* H5 - Nested/minor headers */
+
+	:root {
+		/* Typography Scale */
+		--text-h1: 1.6rem;      /* Chapter titles */
+		--text-h2: 1.1rem;      /* Subchapter titles */
+		--text-h3: 0.95rem;     /* Sub-subchapter titles */
+		--text-h4: 0.85rem;     /* Card headers, labels */
+		--text-h5: 0.75rem;     /* Minor headers, captions */
+
+		--text-body-lg: 1.125rem;  /* Intro paragraphs */
+		--text-body: 1rem;         /* Regular content */
+		--text-body-sm: 0.875rem;  /* Cards, notes, details */
+		--text-caption: 0.75rem;   /* Tags, badges, labels */
+		--text-micro: 0.625rem;    /* Very small labels */
+
+		/* Text colors - standardized opacity levels */
+		--text-primary: rgba(240, 237, 230, 0.95);    /* Headings */
+		--text-secondary: rgba(240, 237, 230, 0.88);  /* Subheadings */
+		--text-body-color: rgba(240, 237, 230, 0.72); /* Body text */
+		--text-muted: rgba(240, 237, 230, 0.6);       /* Captions, hints */
+
+		/* Gold accent variations */
+		--gold-primary: var(--color-arcane-gold);
+		--gold-muted: rgba(232, 200, 116, 0.95);
+
+		/* Card styles - standardized */
+		--card-bg: rgba(0, 0, 0, 0.2);
+		--card-bg-highlight: rgba(196, 160, 96, 0.1);
+		--card-border: rgba(196, 160, 96, 0.15);
+		--card-border-highlight: rgba(196, 160, 96, 0.32);
+		--card-radius: 8px;
+		--card-padding: 1.25rem;
+	}
+
 	.rules-page {
 		@apply relative min-h-screen overflow-x-hidden;
 		background: #0a0a0f;
@@ -209,7 +254,7 @@ body {
 	}
 
 	.toc-sidebar {
-		@apply fixed left-0 top-[64px] bottom-0 z-[90] w-[280px] overflow-y-auto border-r;
+		@apply fixed left-0 top-[64px] bottom-0 z-[90] w-[260px] overflow-y-auto border-r;
 		background: linear-gradient(135deg, rgba(18, 18, 26, 0.92) 0%, rgba(10, 10, 15, 0.92) 100%);
 		border-color: rgba(196, 160, 96, 0.15);
 	}
@@ -230,9 +275,9 @@ body {
 
 	.toc-header h2 {
 		@apply m-0;
-		color: var(--color-arcane-gold);
+		color: var(--gold-primary);
 		font-family: 'Opsilon', sans-serif;
-		font-size: 0.75rem;
+		font-size: var(--text-h5);
 		text-transform: uppercase;
 		letter-spacing: 0.2em;
 	}
@@ -281,12 +326,19 @@ body {
 	}
 
 	.rules-main {
-		@apply relative z-[1] mx-auto max-w-[1400px] px-3 pb-24 pt-24 sm:px-6 lg:px-10;
+		@apply fixed z-[1] mx-auto max-w-[1800px] px-4 pb-24 pt-6 sm:px-6 lg:px-8;
+		top: 64px;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		overflow-y: auto;
+		scroll-behavior: smooth;
+		scroll-padding-top: 160px;
 	}
 
 	@media (min-width: 640px) {
 		.rules-main {
-			@apply pl-[320px];
+			@apply pl-[300px];
 		}
 	}
 
@@ -309,9 +361,9 @@ body {
 
 	.section-header h2 {
 		@apply m-0;
-		color: rgba(240, 237, 230, 0.95);
+		color: var(--text-primary);
 		font-family: 'Opsilon', sans-serif;
-		font-size: 1.8rem;
+		font-size: var(--text-h1);
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
 	}
@@ -326,14 +378,17 @@ body {
 	}
 
 	.lead-text {
-		@apply text-lg leading-7;
-		color: rgba(240, 237, 230, 0.75);
+		@apply leading-7;
+		font-size: var(--text-body-lg);
+		color: var(--text-body-color);
 	}
 
 	.callout-box {
-		@apply mt-8 flex gap-4 rounded border p-5;
-		border-color: rgba(196, 160, 96, 0.18);
-		background: rgba(0, 0, 0, 0.2);
+		@apply mt-8 flex gap-4 rounded border;
+		padding: var(--card-padding);
+		border-radius: var(--card-radius);
+		border-color: var(--card-border);
+		background: var(--card-bg);
 	}
 
 	.callout-icon {
@@ -342,16 +397,16 @@ body {
 
 	.callout-content h4 {
 		@apply m-0;
-		color: var(--color-arcane-gold);
+		color: var(--gold-primary);
 		font-family: 'Opsilon', sans-serif;
-		font-size: 0.9rem;
+		font-size: var(--text-h4);
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
 	}
 
 	.callout-content p {
 		@apply mb-1 mt-2;
-		color: rgba(240, 237, 230, 0.72);
+		color: var(--text-body-color);
 	}
 
 	.pieces-grid {
@@ -359,7 +414,7 @@ body {
 	}
 
 	.core-pieces-grid {
-		@apply lg:grid-cols-4;
+		@apply lg:grid-cols-3;
 	}
 
 	.core-piece-guardians {
@@ -371,23 +426,26 @@ body {
 	}
 
 	.piece-card {
-		@apply rounded border p-5;
-		border-color: rgba(196, 160, 96, 0.15);
-		background: rgba(0, 0, 0, 0.18);
+		@apply rounded border;
+		padding: var(--card-padding);
+		border-radius: var(--card-radius);
+		border-color: var(--card-border);
+		background: var(--card-bg);
+		font-size: var(--text-body-sm);
+		color: var(--text-body-color);
 	}
 
 	.piece-card h4 {
 		@apply mb-2 mt-0;
-		color: var(--color-arcane-gold);
+		color: var(--gold-primary);
 		font-family: 'Opsilon', sans-serif;
-		font-size: 0.85rem;
+		font-size: var(--text-h4);
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 	}
 
 	.piece-card p {
-		@apply m-0 text-sm leading-6;
-		color: rgba(240, 237, 230, 0.7);
+		@apply m-0 leading-6;
 	}
 
 	.piece-icon {
@@ -478,72 +536,43 @@ body {
 	}
 
 	.screenshot-img,
-	.board-img,
-	.monster-img {
+	.board-img {
 		@apply block w-full;
 		height: auto;
 	}
 
-	/* Subsections / lists / notes */
-	.subsection {
-		@apply mt-10 rounded border p-5;
-		border-color: rgba(196, 160, 96, 0.15);
-		background: rgba(0, 0, 0, 0.15);
-	}
-
-	.subsection-header {
-		@apply mb-4 flex items-center gap-3;
-	}
-
-	.subsection-icon {
-		@apply text-lg;
-		color: rgba(196, 160, 96, 0.9);
-	}
-
-	.subsection-header h4 {
-		@apply m-0;
-		color: rgba(240, 237, 230, 0.95);
-		font-family: 'Opsilon', sans-serif;
-		font-size: 1.05rem;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-	}
-
-	.subsection-content {
-		@apply text-base leading-7;
-		color: rgba(240, 237, 230, 0.72);
-	}
-
-	.subsection-content h5 {
-		@apply mb-3 mt-6;
-		color: rgba(232, 200, 116, 0.95);
-		font-family: 'Opsilon', sans-serif;
-		font-size: 0.85rem;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-	}
-
+	/* Lists / notes */
 	.rule-list {
-		@apply mt-3 list-disc space-y-1 pl-5;
+		@apply mt-3 space-y-1.5 pl-6;
+	}
+
+	ul.rule-list {
+		@apply list-disc;
+	}
+
+	ol.rule-list {
+		@apply list-decimal;
 	}
 
 	.note-box {
-		@apply mt-4 rounded border-l-2 px-4 py-3 text-sm;
+		@apply mt-4 rounded border-l-2 px-4 py-3;
+		font-size: var(--text-body-sm);
 		background: rgba(196, 160, 96, 0.08);
-		border-color: rgba(196, 160, 96, 0.35);
+		border-color: var(--card-border-highlight);
 	}
 
 	.example-box {
-		@apply mt-4 rounded border px-4 py-3 text-sm;
-		border-color: rgba(196, 160, 96, 0.18);
-		background: rgba(0, 0, 0, 0.15);
+		@apply mt-4 rounded border px-4 py-3;
+		font-size: var(--text-body-sm);
+		border-color: var(--card-border);
+		background: var(--card-bg);
 	}
 
 	.example-label {
 		@apply mr-2;
-		color: var(--color-arcane-gold);
+		color: var(--gold-primary);
 		font-family: 'Opsilon', sans-serif;
-		font-size: 0.75rem;
+		font-size: var(--text-caption);
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
 	}
@@ -558,8 +587,9 @@ body {
 	}
 
 	.status-name {
-		@apply mt-1 text-xs uppercase tracking-widest;
-		color: rgba(240, 237, 230, 0.7);
+		@apply mt-1 uppercase tracking-widest;
+		font-size: var(--text-caption);
+		color: var(--text-body-color);
 		font-family: 'Opsilon', sans-serif;
 	}
 
@@ -607,134 +637,6 @@ body {
 		@apply mb-4;
 	}
 
-	/* Artifact inline media */
-	.artifact-layout {
-		@apply grid gap-6 lg:grid-cols-[minmax(0,1fr)_240px] lg:items-start;
-	}
-
-	.artifact-img-inline {
-		@apply w-full;
-		height: auto;
-	}
-
-	/* Examples: monsters */
-	.monsters-grid {
-		@apply lg:grid-cols-4;
-	}
-
-	.monster-rewards {
-		@apply mt-2;
-	}
-
-	.monster-card {
-		@apply flex flex-col gap-3;
-	}
-
-	.monster-title {
-		@apply m-0;
-	}
-
-	.monster-stats {
-		@apply flex flex-wrap gap-2;
-	}
-
-	.stat-pill {
-		@apply inline-flex items-center rounded border px-2 py-1 text-[10px] uppercase tracking-widest;
-		border-color: rgba(196, 160, 96, 0.2);
-		background: rgba(0, 0, 0, 0.2);
-		color: rgba(240, 237, 230, 0.7);
-		font-family: 'Opsilon', sans-serif;
-	}
-
-	.monster-effects {
-		@apply flex flex-wrap gap-2;
-	}
-
-	.effect-pill {
-		@apply inline-flex items-center rounded border-l-4 border px-2 py-1 text-[10px] uppercase tracking-widest;
-		border-color: rgba(196, 160, 96, 0.2);
-		background: rgba(0, 0, 0, 0.2);
-		color: rgba(240, 237, 230, 0.7);
-		font-family: 'Opsilon', sans-serif;
-		border-left-color: var(--effect);
-	}
-
-	.reward-row {
-		@apply mt-2 flex items-center justify-between gap-3;
-	}
-
-	.reward-row.compact {
-		@apply mt-1;
-	}
-
-	.reward-tag {
-		@apply rounded px-2 py-1 text-[10px] uppercase tracking-widest;
-		background: rgba(196, 160, 96, 0.1);
-		color: var(--color-arcane-gold);
-		font-family: 'Opsilon', sans-serif;
-	}
-
-	.reward-icons {
-		@apply flex flex-wrap items-center gap-2;
-	}
-
-	.reward-icon {
-		@apply inline-flex items-center gap-1;
-	}
-
-	.icon-count {
-		@apply text-xs;
-		color: rgba(240, 237, 230, 0.75);
-	}
-
-	/* WIP modal (Examples / TTS guide) */
-	.wip-overlay {
-		@apply fixed inset-0 z-[200] flex items-center justify-center bg-black/70 p-4;
-	}
-
-	.wip-modal {
-		@apply w-full max-w-lg rounded border p-6;
-		background: rgba(18, 18, 26, 0.95);
-		border-color: rgba(196, 160, 96, 0.25);
-	}
-
-	.wip-title {
-		@apply m-0;
-		color: var(--color-arcane-gold);
-		font-family: 'Opsilon', sans-serif;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-		font-size: 0.95rem;
-	}
-
-	.wip-text {
-		@apply mt-3 text-base leading-7;
-		color: rgba(240, 237, 230, 0.75);
-	}
-
-	.wip-actions {
-		@apply mt-5 flex flex-wrap gap-3;
-	}
-
-	.wip-button {
-		@apply inline-flex items-center justify-center rounded border px-4 py-2 text-xs uppercase tracking-widest no-underline transition;
-		border-color: rgba(196, 160, 96, 0.25);
-		color: rgba(240, 237, 230, 0.85);
-		font-family: 'Opsilon', sans-serif;
-		background: rgba(0, 0, 0, 0.15);
-	}
-
-	.wip-button:hover {
-		background: rgba(196, 160, 96, 0.12);
-		border-color: rgba(196, 160, 96, 0.4);
-		color: rgba(240, 237, 230, 0.95);
-	}
-
-	.wip-button.primary {
-		background: rgba(196, 160, 96, 0.18);
-		color: var(--color-arcane-gold);
-	}
-
 	/* Footer */
 	.rules-footer {
 		@apply border-t pt-10 text-center;
@@ -765,196 +667,37 @@ body {
 		@apply flex flex-wrap gap-2;
 	}
 
-	/* Intro block */
-	.intro-block {
-		@apply space-y-4;
+
+	.rule-sublist {
+		@apply mt-2 space-y-1 pl-8;
 	}
 
-	/* Diagram */
-	.diagram-container {
-		@apply mt-6 rounded border p-4 sm:p-6;
-		border-color: rgba(196, 160, 96, 0.15);
-		background: rgba(0, 0, 0, 0.15);
+	ul.rule-sublist {
+		@apply list-disc;
 	}
 
-	.full-width {
-		@apply w-full;
+	ol.rule-sublist {
+		@apply list-decimal;
 	}
 
-	/* Combat */
-	.combat-sequence {
-		@apply mt-6;
+	.monster-specific {
+		color: rgba(239, 68, 68, 0.9);
 	}
 
-	.combat-intro {
-		@apply mb-6 text-lg leading-7;
-		color: rgba(240, 237, 230, 0.75);
-	}
-
-	.combat-timeline {
-		@apply flex flex-col gap-6;
-	}
-
-	.combat-phase {
-		@apply grid gap-4;
-		grid-template-columns: 44px minmax(0, 1fr);
-	}
-
-	.phase-marker {
-		@apply relative flex flex-col items-center self-stretch;
-	}
-
-	.phase-marker.final .marker-line {
-		display: none;
-	}
-
-	.marker-num {
-		@apply grid h-9 w-9 place-items-center rounded-full border text-sm font-semibold;
-		border-color: rgba(196, 160, 96, 0.35);
-		background: rgba(196, 160, 96, 0.12);
-		color: rgba(240, 237, 230, 0.9);
-		font-family: 'Opsilon', sans-serif;
-	}
-
-	.marker-line {
-		@apply mt-2 w-px flex-1;
-		background: linear-gradient(180deg, rgba(196, 160, 96, 0.35), transparent);
-	}
-
-	.phase-card {
-		@apply rounded border p-5;
-		border-color: rgba(196, 160, 96, 0.15);
-		background: rgba(0, 0, 0, 0.18);
-	}
-
-	.phase-card.highlight {
-		border-color: rgba(196, 160, 96, 0.28);
-		background: rgba(196, 160, 96, 0.08);
-	}
-
-	.phase-card.reward {
-		border-color: rgba(232, 200, 116, 0.25);
-		background: rgba(232, 200, 116, 0.06);
-	}
-
-	.phase-card.optional {
-		border-style: dashed;
-	}
-
-	.card-header {
-		@apply flex flex-wrap items-center gap-2;
-	}
-
-	.card-header h5 {
-		@apply m-0 flex items-center gap-2;
-		color: rgba(240, 237, 230, 0.95);
-		font-family: 'Opsilon', sans-serif;
-		font-size: 0.9rem;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-	}
-
-	.card-body {
-		@apply mt-3 text-base leading-7;
-		color: rgba(240, 237, 230, 0.72);
-	}
-
-	.card-body ul {
-		@apply list-disc space-y-1 pl-5;
-	}
-
-	.card-body p {
-		@apply mb-2 mt-0;
-	}
-
-	.phase-icon {
-		@apply text-base;
-		color: rgba(196, 160, 96, 0.9);
-	}
-
-	.optional-tag,
-	.coop-tag {
-		@apply ml-auto rounded border px-2 py-1 text-[10px] uppercase tracking-widest;
-		border-color: rgba(196, 160, 96, 0.22);
-		background: rgba(0, 0, 0, 0.15);
-		color: rgba(240, 237, 230, 0.75);
-		font-family: 'Opsilon', sans-serif;
-	}
-
-	.coop-tag {
-		background: rgba(34, 197, 94, 0.12);
-		border-color: rgba(34, 197, 94, 0.25);
-	}
-
-	.inline-example,
-	.inline-tip {
-		@apply mt-3 rounded border px-3 py-2 text-sm;
-		border-color: rgba(196, 160, 96, 0.18);
-		background: rgba(0, 0, 0, 0.15);
-	}
-
-	.inline-tip {
-		border-color: rgba(196, 160, 96, 0.12);
-		background: rgba(196, 160, 96, 0.06);
-	}
-
-	.combat-substep-intro {
-		@apply mb-2;
-	}
-
-	.defense-steps {
-		@apply mt-3 list-decimal space-y-1 pl-5;
-	}
-
-	.combat-footer {
-		@apply mt-8;
-	}
-
-	.footer-note {
-		@apply flex items-start gap-3 rounded border px-4 py-3 text-sm;
-		border-color: rgba(196, 160, 96, 0.18);
-		background: rgba(0, 0, 0, 0.15);
-		color: rgba(240, 237, 230, 0.72);
-	}
-
-	.note-icon {
-		@apply mt-0.5 text-base;
-		color: rgba(196, 160, 96, 0.85);
-	}
-
-	/* Location benefit types */
-	.reward-types {
-		@apply mt-6 grid gap-4 sm:grid-cols-2;
-	}
-
-	.reward-type {
-		@apply rounded border p-4;
-		border-color: rgba(196, 160, 96, 0.15);
-		background: rgba(0, 0, 0, 0.15);
-	}
-
-	.reward-type.gain {
-		border-color: rgba(34, 197, 94, 0.25);
-		background: rgba(34, 197, 94, 0.06);
-	}
-
-	.reward-type.trade {
-		border-color: rgba(232, 200, 116, 0.25);
-		background: rgba(196, 160, 96, 0.06);
-	}
-
-	.reward-label {
-		@apply mb-2 inline-flex items-center rounded border px-2 py-1 text-[10px] uppercase tracking-widest;
-		font-family: 'Opsilon', sans-serif;
-		border-color: rgba(196, 160, 96, 0.25);
+	.link-button {
+		background: none;
+		border: none;
 		color: var(--color-arcane-gold);
-		background: rgba(0, 0, 0, 0.15);
+		text-decoration: underline;
+		cursor: pointer;
+		padding: 0;
+		font: inherit;
 	}
 
-	.reward-indicator {
-		@apply mt-2 text-sm;
-		color: rgba(240, 237, 230, 0.65);
+	.link-button:hover {
+		color: rgba(232, 200, 116, 1);
 	}
+
 
 	/* Artifacts inline */
 	.artifact-inline {
@@ -970,33 +713,18 @@ body {
 	}
 
 	/* Screenshots */
-	.screenshot-grid {
-		@apply lg:grid-cols-3;
-	}
-
-	.screenshot-card {
-		@apply flex flex-col gap-3;
-	}
-
 	.screenshot-link {
 		@apply block overflow-hidden rounded border;
-		border-color: rgba(196, 160, 96, 0.15);
-		background: rgba(0, 0, 0, 0.18);
+		border-radius: var(--card-radius);
+		border-color: var(--card-border);
+		background: var(--card-bg);
 	}
 
 	.screenshot-sheet {
 		@apply mt-4 rounded border p-3;
-		border-color: rgba(196, 160, 96, 0.15);
-		background: rgba(0, 0, 0, 0.18);
-	}
-
-	.screenshot-title {
-		@apply m-0;
-		color: rgba(240, 237, 230, 0.9);
-		font-family: 'Opsilon', sans-serif;
-		font-size: 0.75rem;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
+		border-radius: var(--card-radius);
+		border-color: var(--card-border);
+		background: var(--card-bg);
 	}
 
 	/* Player mat layout */
@@ -1012,25 +740,10 @@ body {
 		@apply min-w-0;
 	}
 
-	/* Misc emphasis */
-	.highlight {
-		@apply font-semibold;
-		color: rgba(240, 237, 230, 0.95);
-	}
-
+	/* Special callout variants */
 	.win-condition {
 		border-color: rgba(196, 160, 96, 0.28);
 		background: rgba(196, 160, 96, 0.06);
-	}
-
-	.gain .reward-label {
-		border-color: rgba(34, 197, 94, 0.25);
-		color: rgba(34, 197, 94, 0.95);
-	}
-
-	.trade .reward-label {
-		border-color: rgba(232, 200, 116, 0.25);
-		color: rgba(232, 200, 116, 0.95);
 	}
 
 	/* Hex spirit table */
@@ -1062,8 +775,9 @@ body {
 
 	.hex-spirit-origin-card {
 		@apply rounded border p-4;
-		border-color: rgba(196, 160, 96, 0.15);
-		background: rgba(0, 0, 0, 0.15);
+		border-radius: var(--card-radius);
+		border-color: var(--card-border);
+		background: var(--card-bg);
 	}
 
 	.hex-spirit-origin-header {
@@ -1165,5 +879,302 @@ body {
 		@apply block text-[10px] uppercase tracking-widest;
 		color: rgba(240, 237, 230, 0.72);
 		font-family: 'Opsilon', sans-serif;
+	}
+
+	/* ============================================
+	   TREE STRUCTURE SYSTEM
+	   Hierarchical indentation for all sections
+	   ============================================ */
+
+	/* Chapter container - top level sections */
+	.chapter {
+		@apply mb-16;
+	}
+
+	.chapter-header {
+		@apply mb-6 flex items-center gap-4;
+	}
+
+	/* Shared title styles */
+	.chapter-title,
+	.subchapter-title,
+	.sub-subchapter-title {
+		@apply m-0;
+		font-family: 'Opsilon', sans-serif;
+		text-transform: uppercase;
+	}
+
+	.chapter-title {
+		color: var(--text-primary);
+		font-size: var(--text-h1);
+		letter-spacing: 0.06em;
+	}
+
+	.chapter-line {
+		@apply h-px flex-1;
+		background: linear-gradient(90deg, rgba(196, 160, 96, 0.35), transparent);
+	}
+
+	/* Chapter content - clean layout without border-left */
+	.chapter-content {
+		@apply pl-6 leading-7;
+		font-size: var(--text-body);
+		color: var(--text-body-color);
+	}
+
+	/* Subchapter - nested within chapter */
+	.subchapter {
+		@apply mt-8;
+	}
+
+	.subchapter:first-child {
+		@apply mt-0;
+	}
+
+	.subchapter-header {
+		@apply mb-4 flex items-center gap-3;
+	}
+
+	/* Numbered badge - shared base for subchapter-num, sub-subchapter-num, flow-num */
+	.subchapter-num,
+	.sub-subchapter-num,
+	.flow-num {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-family: 'Opsilon', monospace;
+		font-weight: 600;
+	}
+
+	.subchapter-num {
+		min-width: 2.25rem;
+		height: 1.75rem;
+		padding: 0 0.625rem;
+		background: rgba(196, 160, 96, 0.18);
+		border: 1px solid rgba(196, 160, 96, 0.4);
+		border-radius: 5px;
+		color: var(--gold-primary);
+		font-size: var(--text-h4);
+	}
+
+	.subchapter-title {
+		color: var(--text-secondary);
+		font-size: var(--text-h2);
+		letter-spacing: 0.05em;
+	}
+
+	/* Subchapter content - minimal indentation, inherits base text from chapter-content */
+	.subchapter-content {
+		@apply pl-4 leading-7;
+		font-size: var(--text-body);
+		color: var(--text-body-color);
+	}
+
+	/* Sub-subchapter (third level) */
+	.sub-subchapter {
+		@apply mt-6 pt-2;
+	}
+
+	.sub-subchapter-header {
+		@apply mb-3 flex items-center gap-3;
+	}
+
+	.sub-subchapter-num {
+		min-width: 2.5rem;
+		height: 1.5rem;
+		padding: 0 0.5rem;
+		background: rgba(196, 160, 96, 0.14);
+		border: 1px solid rgba(196, 160, 96, 0.32);
+		border-radius: 4px;
+		color: var(--gold-muted);
+		font-size: var(--text-caption);
+	}
+
+	.flow-num {
+		min-width: 2.75rem;
+		height: 1.375rem;
+		padding: 0 0.5rem;
+		background: rgba(196, 160, 96, 0.12);
+		border: 1px solid rgba(196, 160, 96, 0.28);
+		border-radius: 4px;
+		color: var(--gold-primary);
+		font-size: var(--text-caption);
+	}
+
+	.sub-subchapter-title {
+		color: var(--text-secondary);
+		font-size: var(--text-h3);
+		letter-spacing: 0.04em;
+	}
+
+
+	/* Tree intro text - just adds bottom margin, inherits base text styling */
+	.tree-intro {
+		@apply mb-4;
+	}
+
+	/* Deep nested content - use background tint instead of border */
+	.nested-content {
+		@apply mt-5;
+		background: rgba(0, 0, 0, 0.12);
+		border-radius: 10px;
+		padding: 1.25rem;
+		margin-left: 0.5rem;
+	}
+
+	.nested-content .content-card {
+		@apply mt-3;
+	}
+
+	/* Flow elements (used in rules pages) */
+	.flow-subheader {
+		@apply mb-3 mt-6 flex items-center gap-3;
+		color: var(--text-secondary);
+		font-family: 'Opsilon', sans-serif;
+		font-size: var(--text-h3);
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+
+	h5.flow-subheader {
+		@apply mt-5;
+		font-size: var(--text-h4);
+		color: var(--gold-muted);
+	}
+
+	/* Flow intro text - just adds bottom margin, inherits base text styling */
+	.flow-intro {
+		@apply mb-4;
+	}
+
+	/* ============================================
+	   TWO-COLUMN LAYOUT WITH FAQ SIDEBAR
+	   ============================================ */
+
+	.rules-layout {
+		display: grid;
+		grid-template-columns: 1fr 340px;
+		gap: 2.5rem;
+		align-items: start;
+	}
+
+	.rules-content {
+		min-width: 0; /* Prevent overflow */
+	}
+
+	/* FAQ Sidebar */
+	.faq-sidebar {
+		position: sticky;
+		top: 0;
+		height: fit-content;
+		max-height: calc(100vh - 80px);
+		overflow-y: auto;
+		padding: 1.25rem;
+		background: rgba(0, 0, 0, 0.25);
+		border-left: 2px solid rgba(196, 160, 96, 0.3);
+		border-radius: 0;
+	}
+
+	.sidebar-section {
+		margin-bottom: 1.5rem;
+		padding-bottom: 1.5rem;
+		border-bottom: 1px solid rgba(196, 160, 96, 0.15);
+	}
+
+	.sidebar-section:last-child {
+		margin-bottom: 0;
+		padding-bottom: 0;
+		border-bottom: none;
+	}
+
+	.sidebar-header {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		margin-bottom: 1rem;
+		padding-bottom: 0.75rem;
+		border-bottom: 1px solid rgba(196, 160, 96, 0.2);
+		color: var(--color-arcane-gold);
+		font-family: 'Opsilon', sans-serif;
+		font-size: 0.8rem;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+	}
+
+	.sidebar-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.5rem;
+		height: 1.5rem;
+		background: rgba(196, 160, 96, 0.2);
+		border: 1px solid rgba(196, 160, 96, 0.4);
+		border-radius: 50%;
+		font-size: 0.75rem;
+		font-weight: 700;
+	}
+
+	/* Terminology styles */
+	.term-item {
+		margin-bottom: 1rem;
+	}
+
+	.term-item:last-child {
+		margin-bottom: 0;
+	}
+
+	.term-name {
+		margin: 0 0 0.25rem;
+		color: var(--text-secondary);
+		font-family: 'Opsilon', sans-serif;
+		font-size: var(--text-h4);
+		font-weight: 600;
+	}
+
+	.term-definition {
+		margin: 0;
+		color: var(--text-muted);
+		font-size: var(--text-body-sm);
+		line-height: 1.55;
+	}
+
+	/* FAQ styles */
+	.faq-item {
+		margin-bottom: 1.25rem;
+		padding-bottom: 1.25rem;
+		border-bottom: 1px solid rgba(196, 160, 96, 0.1);
+	}
+
+	.faq-item:last-child {
+		margin-bottom: 0;
+		padding-bottom: 0;
+		border-bottom: none;
+	}
+
+	.faq-question {
+		margin: 0 0 0.5rem;
+		color: var(--text-secondary);
+		font-family: 'Opsilon', sans-serif;
+		font-size: var(--text-h4);
+		font-weight: 600;
+		line-height: 1.4;
+	}
+
+	.faq-answer {
+		margin: 0;
+		color: var(--text-muted);
+		font-size: var(--text-body-sm);
+		line-height: 1.55;
+	}
+
+	/* Hide FAQ on smaller screens */
+	@media (max-width: 1199px) {
+		.rules-layout {
+			grid-template-columns: 1fr;
+		}
+
+		.faq-sidebar {
+			display: none;
+		}
 	}
 }
